@@ -1,54 +1,37 @@
-# React + TypeScript + Vite
+# React講義プロジェクト
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 環境構築手順
 
-Currently, two official plugins are available:
+このプロジェクトはReactを使用した講義用のプロジェクトで、TypeScriptとViteを採用しています。以下の手順で開発環境を構築してください。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 前提条件
 
-## Expanding the ESLint configuration
+- **Node.js**: v20.12.0
+  - `.nvmrc`ファイルでバージョンが指定されています。
+- **パッケージマネージャー**: pnpm
+- **技術スタック**:
+  - React
+  - TypeScript
+  - Vite（ビルドツール）
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### セットアップ手順
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+#### 依存関係のインストール
+
+`pnpm`で必要なパッケージをインストールします。
+
+```
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### 開発サーバーの起動
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+Viteを使って開発環境を起動し、動作確認を行います。
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
 ```
+pnpm dev
+```
+
+### 確認
+
+`pnpm dev`実行後、ブラウザで`http://localhost:5173`（Viteのデフォルトポート）にアクセスし、Reactアプリが表示されれば成功です。
