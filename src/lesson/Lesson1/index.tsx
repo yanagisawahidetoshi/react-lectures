@@ -13,21 +13,31 @@ export default function Lesson1() {
   };
 
   // 1. idが1のtodoを見つける
-  const findTodoById1 = () => {};
+  const findTodoById1 = () => {
+    console.log('findTodoById1');
+  };
 
   // 2. newTodoをtodosに追加する
   const addTodo = () => {
     const newTodo = { id: 6, title: 'Todo 6', completed: false };
+
+    console.log('addTodo');
   };
 
   // 3. completed: true のtodoのみ表示する
-  const filterCompletedTodos = () => {};
+  const filterCompletedTodos = () => {
+    console.log('filterCompletedTodos');
+  };
 
   // 4. idが1のtodoのtitleをUpdated Todo 1に変更する
-  const editTodoById1 = () => {};
+  const editTodoById1 = () => {
+    console.log('editTodoById1');
+  };
 
   // 5. idが1のtodoを削除する
-  const deleteTodoById1 = () => {};
+  const deleteTodoById1 = () => {
+    console.log('deleteTodoById1');
+  };
 
   example();
   findTodoById1();
