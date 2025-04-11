@@ -14,14 +14,7 @@ export default function Lesson1() {
 
   // 1. idが1のtodoを見つける
   const findTodoById1 = () => {
-    const newTodos = []
-    for (const v of todos) {
-      if (v.id === 1) {
-        newTodos.push(v)
-        break  // idは重複しない前提
-      }
-    }
-    console.log(newTodos)
+    console.log(todos.find(v => v.id === 1))
   };
 
   // 2. newTodoをtodosに追加する
