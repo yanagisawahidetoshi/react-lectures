@@ -30,15 +30,7 @@ export default function Lesson1() {
 
   // 4. idが1のtodoのtitleをUpdated Todo 1に変更する
   const editTodoById1 = () => {
-    console.log(todos.map(v => {
-      if (v.id === 1) {
-        const v2 = {...v}
-        v2.title = 'Updated Todo 1'
-        return v2
-      } else {
-        return v
-      }
-    }))
+    console.log(todos.map(v => v.id === 1 ? {...v, title: 'Updated Todo 1'} : v))
   };
 
   // 5. idが1のtodoを削除する
