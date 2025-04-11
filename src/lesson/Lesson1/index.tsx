@@ -14,15 +14,20 @@ export default function Lesson1() {
 
   // 1. idが1のtodoを見つける
   const findTodoById1 = () => {
-    // 仕様が明確ではないので複数一致する場合も考慮
-    console.log(todos.filter(v => v.id === 1))
+    const newTodos = []
+    for (const v of todos) {
+      if (v.id === 1) {
+        newTodos.push(v)
+        break  // idは重複しない前提
+      }
+    }
+    console.log(newTodos)
   };
 
   // 2. newTodoをtodosに追加する
   const addTodo = () => {
     const newTodo = { id: 6, title: 'Todo 6', completed: false };
-    todos.push(newTodo)  // 課題の指示は元のリストを更新せよというものに読めるのでこのようにしている
-    console.log(todos);
+    console.log([...todos, newTodo]);  // 非破壊的
   };
 
   // 3. completed: true のtodoのみ表示する
@@ -32,16 +37,20 @@ export default function Lesson1() {
 
   // 4. idが1のtodoのtitleをUpdated Todo 1に変更する
   const editTodoById1 = () => {
-    todos.filter(v => v.id === 1).forEach(v => v.title = 'Updated Todo 1')
-    console.log(todos)
+    console.log(todos.map(v => {
+      if (v.id === 1) {
+        const v2 = {...v}
+        v2.title = 'Updated Todo 1'
+        return v2
+      } else {
+        return v
+      }
+    }))
   };
 
   // 5. idが1のtodoを削除する
   const deleteTodoById1 = () => {
-    todos.forEach((v, k) => {
-      if (v.id === 1) delete todos[k]
-    })
-    console.log(todos)
+    console.log(todos.filter(v => v.id !== 1))
   };
 
   example();
