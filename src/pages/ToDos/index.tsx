@@ -1,5 +1,8 @@
+import TodosTable from '../../components/TodosTable';
+import { TodosRowProps } from '../../components/TodosRow';
+
 export const ToDos = () => {
-  const todos = [
+  const todos: TodosRowProps[] = [
     {
       id: 1,
       title: 'Todo 1',
@@ -36,6 +39,7 @@ export const ToDos = () => {
   return (
     <article>
       <h1>ToDoリスト</h1>
+      <TodosTable todos={todos} />
     </article>
   );
 };
