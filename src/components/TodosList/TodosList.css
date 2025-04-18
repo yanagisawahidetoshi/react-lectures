@@ -34,7 +34,7 @@ tr.completed td {
   color: #ccc;
 }
 
-.td-button {
+td.button-container {
   display: flex;
   gap: 8px;
 }

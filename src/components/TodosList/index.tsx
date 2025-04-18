@@ -1,7 +1,7 @@
 import TodosRow, { TodosRowProps } from './TodosRow';
-import './TodosTable.css';
+import './TodosList.css';
 
-const TodosTable: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
+const TodosList: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
   const rowComponents: TodosRowProps[] = [...todos].sort(
     (a: TodosRowProps, b: TodosRowProps) => {
       if (a.createdAt > b.createdAt) {
@@ -34,4 +34,4 @@ const TodosTable: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
   );
 };
 
-export default TodosTable;
+export default TodosList;

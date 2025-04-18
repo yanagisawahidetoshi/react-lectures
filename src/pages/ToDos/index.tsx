@@ -1,5 +1,5 @@
-import TodosTable from '../../components/TodosTable';
-import { TodosRowProps } from '../../components/TodosRow';
+import TodosList from '../../components/TodosList';
+import { TodosRowProps } from '../../components/TodosList/TodosRow';
 
 export const ToDos = () => {
   const todos: TodosRowProps[] = [
@@ -39,7 +39,7 @@ export const ToDos = () => {
   return (
     <article>
       <h1>ToDoリスト</h1>
-      <TodosTable todos={todos} />
+      <TodosList todos={todos} />
     </article>
   );
 };

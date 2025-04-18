@@ -14,7 +14,7 @@ const TodosRow: React.FC<{ todosRow: TodosRowProps }> = ({ todosRow }) => (
     <td>{todosRow.title}</td>
     <td>{todosRow.isCompleted ? '完了' : '未完了'}</td>
     <td>{todosRow.createdAt}</td>
-    <td className="td-button">
+    <td className="button-container">
       <button className="edit">編集する</button>
       <button className="delete">削除する</button>
     </td>
