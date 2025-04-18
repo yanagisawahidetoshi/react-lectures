@@ -1,10 +1,9 @@
-import { JSX } from 'react';
 import TodosRow, { TodosRowProps } from './TodosRow';
 import './TodosTable.css';
 
 const TodosTable: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
-  const rowComponents: JSX.Element[] = [...todos]
-    .sort((a: TodosRowProps, b: TodosRowProps) => {
+  const rowComponents: TodosRowProps[] = [...todos].sort(
+    (a: TodosRowProps, b: TodosRowProps) => {
       if (a.createdAt > b.createdAt) {
         return 1;
       } else if (a.createdAt < b.createdAt) {
@@ -12,9 +11,8 @@ const TodosTable: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
       } else {
         return 0;
       }
-    })
-    .map((r: TodosRowProps) => <TodosRow {...r} />);
-
+    }
+  );
   return (
     <table>
       <thead>
@@ -27,7 +25,11 @@ const TodosTable: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
           <th></th>
         </tr>
       </thead>
-      <tbody>{rowComponents}</tbody>
+      <tbody>
+        {rowComponents.map((r: TodosRowProps) => (
+          <TodosRow todosRow={r} />
+        ))}
+      </tbody>
     </table>
   );
 };

@@ -34,11 +34,12 @@ tr.completed td {
   color: #ccc;
 }
 
+.td-button {
+  display: flex;
+  gap: 8px;
+}
 button {
   color: #eee;
-}
-button:not(:last-child) {
-  margin-right: 10px;
 }
 button.edit {
   background-color: #67a;
