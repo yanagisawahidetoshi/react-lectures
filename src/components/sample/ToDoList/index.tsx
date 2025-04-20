@@ -4,9 +4,15 @@ import styles from './styles.module.css';
 
 type Props = {
   todos: ToDo[];
+  onClickDelete: (id: number) => void;
+  onSubmitEdit: (id: number, title: string) => void;
 };
 
-export const ToDoList: React.FC<Props> = ({ todos }) => {
+export const ToDoList: React.FC<Props> = ({
+  todos,
+  onClickDelete,
+  onSubmitEdit,
+}) => {
   const sortedTodos = [...todos].sort(
     (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)
   );
@@ -28,7 +34,11 @@ export const ToDoList: React.FC<Props> = ({ todos }) => {
       <tbody>
         {sortedTodos.map((v) => (
           <tr key={v.id}>
-            <ToDoItem todo={v} />
+            <ToDoItem
+              todo={v}
+              onClickDelete={onClickDelete}
+              onSubmitEdit={onSubmitEdit}
+            />
           </tr>
         ))}
       </tbody>
