@@ -1,3 +1,5 @@
+import { ToDoList } from '../../../components/sample/ToDoList';
+
 export const ToDos = () => {
   const todos = [
     {
@@ -32,11 +34,10 @@ export const ToDos = () => {
     },
   ];
 
-  console.log(todos);
-
   return (
     <article>
       <h1>ToDoリスト</h1>
+      <ToDoList todos={todos} />
     </article>
   );
 };
