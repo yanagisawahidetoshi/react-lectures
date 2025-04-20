@@ -1,5 +1,7 @@
+import { useState } from 'react';
+
 export const ToDos = () => {
-  const todos = [
+  const initialTodos = [
     {
       id: 1,
       title: 'Todo 1',
@@ -32,7 +34,7 @@ export const ToDos = () => {
     },
   ];
 
-  console.log(todos);
+  const [todos, setTodos] = useState(initialTodos);
 
   return (
     <article>
