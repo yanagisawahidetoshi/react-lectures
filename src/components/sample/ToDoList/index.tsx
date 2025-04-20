@@ -1,4 +1,4 @@
-import type { ToDo } from '../../types';
+import type { ToDo } from '../../../types';
 import { ToDoItem } from '../ToDoItem';
 import styles from './styles.module.css';
 
@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const ToDoList: React.FC<Props> = ({ todos }) => {
-  const sortedTodos = todos.sort(
+  const sortedTodos = [...todos].sort(
     (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)
   );
 

@@ -1,4 +1,4 @@
-import { ToDo } from '../../types';
+import { ToDo } from '../../../types';
 import { ActionButtons } from '../ActionButtons';
 
 export const ToDoItem: React.FC<{ todo: ToDo }> = ({ todo }) => {
