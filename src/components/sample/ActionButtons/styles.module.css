@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  gap: 8px;
+}
+.deleteButton {
+  background: #ff0000;
+  color: #fff;
+}
+
+.editButton {
+  background: blue;
+  color: #fff;
+}

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { ToDoList } from '../../../components/sample/ToDoList';
 
 export const ToDos = () => {
-  const initialTodos = [
+  const todos = [
     {
       id: 1,
       title: 'Todo 1',
@@ -34,11 +34,10 @@ export const ToDos = () => {
     },
   ];
 
-  const [todos, setTodos] = useState(initialTodos);
-
   return (
     <article>
       <h1>ToDoリスト</h1>
+      <ToDoList todos={todos} />
     </article>
   );
 };
