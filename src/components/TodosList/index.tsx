@@ -1,7 +1,11 @@
+import { Dispatch, SetStateAction } from 'react';
 import TodosRow, { TodosRowProps } from './TodosRow';
 import './TodosList.css';
 
-const TodosList: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
+const TodosList: React.FC<{
+  todos: TodosRowProps[];
+  setTodos: Dispatch<SetStateAction<TodosRowProps[]>>;
+}> = ({ todos, setTodos }) => {
   const rowComponents: TodosRowProps[] = [...todos].sort(
     (a: TodosRowProps, b: TodosRowProps) => {
       if (a.createdAt > b.createdAt) {
@@ -27,7 +31,7 @@ const TodosList: React.FC<{ todos: TodosRowProps[] }> = ({ todos }) => {
       </thead>
       <tbody>
         {rowComponents.map((r: TodosRowProps) => (
-          <TodosRow todosRow={r} />
+          <TodosRow todosRow={r} setTodos={setTodos} />
         ))}
       </tbody>
     </table>

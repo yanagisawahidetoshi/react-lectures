@@ -41,7 +41,7 @@ export const ToDos = () => {
   return (
     <article>
       <h1>ToDoリスト</h1>
-      <TodosList todos={todos} />
+      <TodosList todos={todos} setTodos={setTodos} />
     </article>
   );
 };
