@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import TodosList from '../../components/TodosList';
+import { TodosRowProps } from '../../components/TodosList/TodosRow';
 
 export const ToDos = () => {
-  const initialTodos = [
+  const initialTodos: TodosRowProps[] = [
     {
       id: 1,
       title: 'Todo 1',
@@ -39,6 +41,7 @@ export const ToDos = () => {
   return (
     <article>
       <h1>ToDoリスト</h1>
+      <TodosList todos={todos} />
     </article>
   );
 };
