@@ -38,10 +38,24 @@ export const ToDos = () => {
 
   const [todos, setTodos] = useState(initialTodos);
 
+  const deleteItem: (todosRow: TodosRowProps) => void = (
+    todosRow: TodosRowProps
+  ) => {
+    if (
+      window.confirm(`${todosRow.title} (ID=${todosRow.id})\nを削除しますか？`)
+    ) {
+      setTodos((prev: TodosRowProps[]) =>
+        prev
+          .map((row: TodosRowProps) => ({ ...row })) // deepcopy 必要？
+          .filter((row: TodosRowProps) => row.id !== todosRow.id)
+      );
+    }
+  };
+
   return (
     <article>
       <h1>ToDoリスト</h1>
-      <TodosList todos={todos} setTodos={setTodos} />
+      <TodosList todos={todos} deleteItem={deleteItem} />
     </article>
   );
 };
