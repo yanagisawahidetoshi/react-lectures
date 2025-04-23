@@ -33,6 +33,9 @@ tr.completed td {
   background-color: #999;
   color: #ccc;
 }
+td input {
+  background-color: #eee;
+}
 
 td.button-container {
   display: flex;

@@ -42,22 +42,29 @@ export const ToDos = () => {
   const [todos, setTodos] = useState(initialTodos);
 
   const todoItemHandlers: TodoItemHandlers = {
-    startEdit: (todoItem) => {
-      console.log('TODO');
-    },
-    save: (todoItem) => {
-      console.log('TODO');
-    },
-    delete: (todosItem) => {
-      if (
-        window.confirm(
-          `${todosItem.title} (ID=${todosItem.id})\nを削除しますか？`
+    startEdit: (targetId) => {
+      setTodos((prev) =>
+        prev.map((item) =>
+          item.id === targetId ? { ...item, editing: true } : item
         )
-      ) {
-        setTodos((prev) =>
-          prev.filter((row: TodoItemProps) => row.id !== todosItem.id)
-        );
-      }
+      );
+    },
+    cancelEdit: (targetId) => {
+      setTodos((prev) =>
+        prev.map((item) =>
+          item.id === targetId ? { ...item, editing: false } : item
+        )
+      );
+    },
+    update: (targetId, newTodoItem) => {
+      setTodos((prev) =>
+        prev.map((item) =>
+          item.id === targetId ? { ...item, ...newTodoItem } : item
+        )
+      );
+    },
+    delete: (targetId) => {
+      setTodos((prev) => prev.filter((item) => item.id !== targetId));
     },
   };
 

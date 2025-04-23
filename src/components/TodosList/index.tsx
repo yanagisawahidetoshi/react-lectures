@@ -30,7 +30,11 @@ const TodosList: React.FC<{
       </thead>
       <tbody>
         {todoItems.map((r: TodoItemProps) => (
-          <TodoItem todoItem={r} todoItemHandlers={todoItemHandlers} />
+          <TodoItem
+            todoItem={r}
+            todoItemHandlers={todoItemHandlers}
+            key={r.id}
+          />
         ))}
       </tbody>
     </table>
