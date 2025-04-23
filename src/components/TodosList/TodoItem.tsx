@@ -58,6 +58,7 @@ const TodoItem: React.FC<{
             <button
               className="cancel"
               onClick={() => {
+                setTitle(todoItem.title);
                 todoItemHandlers.cancelEdit(todoItem.id);
               }}
             >
