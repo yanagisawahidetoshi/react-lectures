@@ -41,8 +41,12 @@ td.button-container {
 button {
   color: #eee;
 }
-button.edit {
+button.edit,
+button.save {
   background-color: #67a;
+}
+button.cancel {
+  background-color: #666;
 }
 button.delete {
   background-color: #a66;

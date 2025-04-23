@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import TodosList from '../../components/TodosList';
-import { TodosRowProps } from '../../components/TodosList/TodosRow';
+import {
+  TodoItemHandlers,
+  TodoItemProps,
+} from '../../components/TodosList/TodoItem';
 
 export const ToDos = () => {
-  const initialTodos: TodosRowProps[] = [
+  const initialTodos: TodoItemProps[] = [
     {
       id: 1,
       title: 'Todo 1',
@@ -38,22 +41,30 @@ export const ToDos = () => {
 
   const [todos, setTodos] = useState(initialTodos);
 
-  const deleteItem: (todosRow: TodosRowProps) => void = (
-    todosRow: TodosRowProps
-  ) => {
-    if (
-      window.confirm(`${todosRow.title} (ID=${todosRow.id})\nを削除しますか？`)
-    ) {
-      setTodos((prev: TodosRowProps[]) =>
-        prev.filter((row: TodosRowProps) => row.id !== todosRow.id)
-      );
-    }
+  const todoItemHandlers: TodoItemHandlers = {
+    startEdit: (todoItem) => {
+      console.log('TODO');
+    },
+    save: (todoItem) => {
+      console.log('TODO');
+    },
+    delete: (todosItem) => {
+      if (
+        window.confirm(
+          `${todosItem.title} (ID=${todosItem.id})\nを削除しますか？`
+        )
+      ) {
+        setTodos((prev) =>
+          prev.filter((row: TodoItemProps) => row.id !== todosItem.id)
+        );
+      }
+    },
   };
 
   return (
     <article>
       <h1>ToDoリスト</h1>
-      <TodosList todos={todos} deleteItem={deleteItem} />
+      <TodosList todos={todos} todoItemHandlers={todoItemHandlers} />
     </article>
   );
 };
