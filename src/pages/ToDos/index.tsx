@@ -45,9 +45,7 @@ export const ToDos = () => {
       window.confirm(`${todosRow.title} (ID=${todosRow.id})\nを削除しますか？`)
     ) {
       setTodos((prev: TodosRowProps[]) =>
-        prev
-          .map((row: TodosRowProps) => ({ ...row })) // deepcopy 必要？
-          .filter((row: TodosRowProps) => row.id !== todosRow.id)
+        prev.filter((row: TodosRowProps) => row.id !== todosRow.id)
       );
     }
   };
