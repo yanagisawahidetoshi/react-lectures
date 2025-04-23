@@ -42,20 +42,6 @@ export const ToDos = () => {
   const [todos, setTodos] = useState(initialTodos);
 
   const todoItemHandlers: TodoItemHandlers = {
-    startEdit: (targetId) => {
-      setTodos((prev) =>
-        prev.map((item) =>
-          item.id === targetId ? { ...item, editing: true } : item
-        )
-      );
-    },
-    cancelEdit: (targetId) => {
-      setTodos((prev) =>
-        prev.map((item) =>
-          item.id === targetId ? { ...item, editing: false } : item
-        )
-      );
-    },
     update: (targetId, newTodoItem) => {
       setTodos((prev) =>
         prev.map((item) =>

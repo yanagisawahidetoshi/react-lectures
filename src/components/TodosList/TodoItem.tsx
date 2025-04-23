@@ -5,18 +5,14 @@ export type TodoItemProps = {
   title: string;
   isCompleted: boolean;
   createdAt: string;
-  editing?: boolean;
 };
 export type TodoUpdateItemProps = {
   id?: number;
   title?: string;
   isCompleted?: boolean;
   createdAt?: string;
-  editing: boolean;
 };
 export type TodoItemHandlers = {
-  startEdit: (targetId: number) => void;
-  cancelEdit: (targetId: number) => void;
   update: (targetId: number, newTodoItem: TodoUpdateItemProps) => void;
   delete: (targetId: number) => void;
 };
@@ -26,6 +22,7 @@ const TodoItem: React.FC<{
   todoItemHandlers: TodoItemHandlers;
 }> = ({ todoItem, todoItemHandlers }) => {
   const [title, setTitle] = useState(todoItem.title);
+  const [editing, setEditing] = useState(false);
   return (
     <tr className={todoItem.isCompleted ? 'completed' : ''}>
       <td>
@@ -33,7 +30,7 @@ const TodoItem: React.FC<{
       </td>
       <td>{todoItem.id}</td>
       <td>
-        {todoItem.editing ? (
+        {editing ? (
           <input value={title} onChange={(e) => setTitle(e.target.value)} />
         ) : (
           todoItem.title
@@ -42,15 +39,15 @@ const TodoItem: React.FC<{
       <td>{todoItem.isCompleted ? '完了' : '未完了'}</td>
       <td>{todoItem.createdAt}</td>
       <td className="button-container">
-        {todoItem.editing ? (
+        {editing ? (
           <>
             <button
               className="save"
               onClick={() => {
                 todoItemHandlers.update(todoItem.id, {
                   title: title,
-                  editing: false,
                 });
+                setEditing(false);
               }}
             >
               保存する
@@ -59,7 +56,7 @@ const TodoItem: React.FC<{
               className="cancel"
               onClick={() => {
                 setTitle(todoItem.title);
-                todoItemHandlers.cancelEdit(todoItem.id);
+                setEditing(false);
               }}
             >
               キャンセル
@@ -69,7 +66,7 @@ const TodoItem: React.FC<{
           <button
             className="edit"
             onClick={() => {
-              todoItemHandlers.startEdit(todoItem.id);
+              setEditing(true);
             }}
           >
             編集する
