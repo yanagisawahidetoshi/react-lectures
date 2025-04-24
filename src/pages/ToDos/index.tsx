@@ -1,5 +1,12 @@
+import { useState } from 'react';
+import TodosList from '../../components/TodosList';
+import {
+  TodoItemHandlers,
+  TodoItemProps,
+} from '../../components/TodosList/TodoItem';
+
 export const ToDos = () => {
-  const todos = [
+  const initialTodos: TodoItemProps[] = [
     {
       id: 1,
       title: 'Todo 1',
@@ -32,11 +39,25 @@ export const ToDos = () => {
     },
   ];
 
-  console.log(todos);
+  const [todos, setTodos] = useState(initialTodos);
+
+  const todoItemHandlers: TodoItemHandlers = {
+    update: (targetId, newTodoItem) => {
+      setTodos((prev) =>
+        prev.map((item) =>
+          item.id === targetId ? { ...item, ...newTodoItem } : item
+        )
+      );
+    },
+    delete: (targetId) => {
+      setTodos((prev) => prev.filter((item) => item.id !== targetId));
+    },
+  };
 
   return (
     <article>
       <h1>ToDoリスト</h1>
+      <TodosList todos={todos} todoItemHandlers={todoItemHandlers} />
     </article>
   );
 };
