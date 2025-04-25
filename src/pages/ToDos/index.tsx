@@ -34,6 +34,7 @@ export const ToDos = () => {
     },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [todos, setTodos] = useState(initialTodos);
 
   return (
