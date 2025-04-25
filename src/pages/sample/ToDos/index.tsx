@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CreateTodo } from '../../../components/sample/CreateTodo';
 import { ToDoList } from '../../../components/sample/ToDoList';
 
 export const ToDos = () => {
@@ -35,20 +36,66 @@ export const ToDos = () => {
     },
   ];
 
-  const [todos, setDoDos] = useState(initialTodos);
+  const [todos, setToDos] = useState(initialTodos);
+  const [checkingIds, setCheckingIds] = useState<number[]>([]);
 
   function deleteTodo(id: number) {
-    setDoDos((prevTodos) => {
+    setToDos((prevTodos) => {
       return prevTodos.filter((todo) => todo.id !== id);
     });
   }
 
   function editTodo(id: number, title: string) {
-    setDoDos((prevTodos) => {
+    setToDos((prevTodos) => {
       return prevTodos.map((todo) => {
         return todo.id === id ? { ...todo, title } : todo;
       });
     });
+  }
+
+  function addToDo(title: string) {
+    setToDos([
+      ...todos,
+      {
+        title,
+        id: (todos.at(-1)?.id ?? 0) + 1,
+        isCompleted: false,
+        createdAt: Date(),
+      },
+    ]);
+  }
+
+  function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      setCheckingIds(todos.map((v) => v.id));
+    } else {
+      setCheckingIds([]);
+    }
+  }
+
+  function toggleCompleted({
+    id,
+    isChecked,
+  }: {
+    id: number;
+    isChecked: boolean;
+  }) {
+    setCheckingIds((prevState) =>
+      isChecked ? [...prevState, id] : prevState.filter((v) => v !== id)
+    );
+  }
+
+  function doCompleted() {
+    setToDos(
+      todos.map((v) => {
+        return checkingIds.includes(v.id)
+          ? {
+              ...v,
+              isCompleted: true,
+            }
+          : v;
+      })
+    );
   }
 
   return (
@@ -58,7 +105,12 @@ export const ToDos = () => {
         todos={todos}
         onClickDelete={deleteTodo}
         onSubmitEdit={editTodo}
+        onChangeAllCheckIds={handleChangeAllCheckIds}
+        checkingIds={checkingIds}
+        onChangeCompleted={toggleCompleted}
+        onClickDoCompleted={doCompleted}
       />
+      <CreateTodo onSubmit={addToDo} />
     </article>
   );
 };
