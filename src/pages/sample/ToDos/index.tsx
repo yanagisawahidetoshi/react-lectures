@@ -35,16 +35,14 @@ export const ToDos = () => {
     },
   ];
 
-  const [todos, setDoDos] = useState(initialTodos);
+  const [todos, setToDos] = useState(initialTodos);
 
   function deleteTodo(id: number) {
-    setDoDos((prevTodos) => {
-      return prevTodos.filter((todo) => todo.id !== id);
-    });
+    setToDos(todos.filter((todo) => todo.id !== id));
   }
 
   function editTodo(id: number, title: string) {
-    setDoDos((prevTodos) => {
+    setToDos((prevTodos) => {
       return prevTodos.map((todo) => {
         return todo.id === id ? { ...todo, title } : todo;
       });

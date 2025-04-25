@@ -1,6 +1,6 @@
 import type { ToDo } from '../../../types';
 import { ToDoItem } from '../ToDoItem';
-import styles from './styles.module.css';
+import * as styles from './styles.module.ts';
 
 type Props = {
   todos: ToDo[];
