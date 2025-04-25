@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export const ToDos = () => {
   const initialTodos = [
     {
@@ -34,8 +32,8 @@ export const ToDos = () => {
     },
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [todos, setTodos] = useState(initialTodos);
+  // const [todos, setTodos] = useState(initialTodos);
+  console.log(initialTodos);
 
   return (
     <article>
