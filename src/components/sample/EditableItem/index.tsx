@@ -1,4 +1,4 @@
-import styles from './styles.module.css';
+import { Input } from '../Input';
 
 type Props = {
   value: string;
@@ -13,12 +13,7 @@ export const EditableItem: React.FC<Props> = ({
   return (
     <>
       {isEdit ? (
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChangeInput(e.target.value)}
-          className={styles.input}
-        />
+        <Input value={value} onChange={(e) => onChangeInput(e.target.value)} />
       ) : (
         <span>{value}</span>
       )}
