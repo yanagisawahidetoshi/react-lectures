@@ -28,7 +28,11 @@ export const ToDoList: React.FC<Props> = ({
 
   return (
     <>
-      <button onClick={onClickDoCompleted}>チェックしたものを完了にする</button>
+      <div className={styles.completedContainer}>
+        <button onClick={onClickDoCompleted} className={styles.completed}>
+          チェックしたものを完了にする
+        </button>
+      </div>
       <table className={styles.table}>
         <thead>
           <tr>

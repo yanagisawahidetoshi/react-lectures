@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Input } from '../Input';
-import styles from './styles.module.css';
+import * as styles from './styles.module.ts';
 
 type Props = {
   onSubmit: (v: string) => void;
@@ -31,7 +31,9 @@ export const CreateTodo: React.FC<Props> = ({ onSubmit }) => {
             value={todo}
             onChange={(e) => setTodo(e.target.value)}
           />
-          <button type="submit">登録する</button>
+          <button type="submit" className={styles.submit}>
+            登録する
+          </button>
         </div>
       </form>
     </>
