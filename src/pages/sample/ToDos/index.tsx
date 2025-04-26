@@ -53,14 +53,29 @@ export const ToDos = () => {
     });
   }
 
+  function createId() {
+    const maxId =
+      todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) : 0;
+    return maxId + 1;
+  }
+
   function addToDo(title: string) {
     setToDos([
       ...todos,
       {
         title,
-        id: (todos.at(-1)?.id ?? 0) + 1,
+        id: createId(),
         isCompleted: false,
-        createdAt: Date(),
+        createdAt: new Date()
+          .toLocaleString('ja-JP', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })
+          .replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/, '$3-$1-$2 $4:$5'),
       },
     ]);
   }
