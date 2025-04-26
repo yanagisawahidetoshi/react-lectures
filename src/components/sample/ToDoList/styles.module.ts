@@ -10,3 +10,15 @@ export const table = css({
     textAlign: 'left',
   },
 });
+
+export const completedContainer = css({
+  display: 'flex',
+  textDecoration: 'underline',
+});
+
+export const completed = css({
+  border: 'none',
+  backgroundColor: 'transparent',
+  padding: 0,
+  marginTop: 8,
+});
