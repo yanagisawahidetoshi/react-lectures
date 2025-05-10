@@ -20,22 +20,21 @@ export const CreateTodo: React.FC<Props> = ({ onSubmit }) => {
   }
 
   return (
-    <>
-      <form className={styles.container} onSubmit={handleSubmit}>
-        <label htmlFor="title" className={styles.label}>
-          ToDoを登録する
-        </label>
-        <div>
-          <Input
-            placeholder="タイトル"
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
-          />
-          <button type="submit" className={styles.submit}>
-            登録する
-          </button>
-        </div>
-      </form>
-    </>
+    <form className={styles.container} onSubmit={handleSubmit}>
+      <label htmlFor="title" className={styles.label}>
+        ToDoを登録する
+      </label>
+      <div>
+        <Input
+          placeholder="タイトル"
+          value={todo}
+          onChange={(e) => setTodo(e.target.value)}
+          id="title"
+        />
+        <button type="submit" className={styles.submit}>
+          登録する
+        </button>
+      </div>
+    </form>
   );
 };
