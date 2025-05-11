@@ -26,10 +26,12 @@ export const ActionButtons: React.FC<Props> = ({
     <div className={styles.container}>
       {isEdit ? (
         <>
-          <button className={styles.editButton} onClick={onClickEditSubmit}>
+          <Button variant="primary" onClick={onClickEditSubmit}>
             保存する
-          </button>
-          <button onClick={onClickEditCancel}>キャンセル</button>
+          </Button>
+          <Button variant="default" onClick={onClickEditCancel}>
+            キャンセル
+          </Button>
         </>
       ) : (
         <Button variant="primary" onClick={onClickEdit}>

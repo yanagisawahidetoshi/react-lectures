@@ -5,17 +5,18 @@ import * as styles from './styles'; // スタイルファイルをインポー�
 
 // --- コンポーネントの型定義 (変更なし) ---
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant: 'primary' | 'danger';
+  variant: 'primary' | 'danger' | 'default'; // variant プロパティを追加
   children: React.ReactNode;
 };
 
 // --- コンポーネントの実装 ---
 export const Button: React.FC<Props> = ({ variant, children, ...rest }) => {
   // インポートしたスタイルオブジェクトから適切なスタイルを選択
-  const variantStyle =
-    variant === 'primary'
-      ? styles.primaryVariantStyle
-      : styles.dangerVariantStyle;
+  const variantStyle = {
+    primary: styles.primaryVariantStyle,
+    danger: styles.dangerVariantStyle,
+    default: styles.defaultVariantStyle,
+  }[variant];
 
   return (
     <button className={cx(styles.baseStyle, variantStyle)} {...rest}>

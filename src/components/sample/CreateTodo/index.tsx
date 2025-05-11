@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../Button';
-import { Input } from '../Input'; // Inputコンポーネントのパスは環境に合わせてください
-import * as styles from './styles'; // .ts ファイルをインポート
+import { Input } from '../Input';
+import * as styles from './styles';
 
 type Props = {
   onSubmit: (v: string) => void;
