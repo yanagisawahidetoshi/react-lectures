@@ -1,24 +1,12 @@
 import { css } from '@emotion/css';
 
-type Props = {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-};
+type Props = React.InputHTMLAttributes<HTMLInputElement>;
 
-export const Input: React.FC<Props> = ({ value, onChange, placeholder }) => {
+export const Input: React.FC<Props> = ({ ...rest }) => {
   const inputStyle = css`
     border: 1px solid #6766;
     padding: 6px;
   `;
 
-  return (
-    <input
-      type="text"
-      value={value}
-      placeholder={placeholder}
-      onChange={(e) => onChange(e)}
-      className={inputStyle}
-    />
-  );
+  return <input type="text" className={inputStyle} {...rest} />;
 };
