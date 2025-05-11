@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CreateTodo } from '../../../components/sample/CreateTodo';
 import { ToDoList } from '../../../components/sample/ToDoList';
 
 export const ToDos = () => {
@@ -36,9 +37,12 @@ export const ToDos = () => {
   ];
 
   const [todos, setToDos] = useState(initialTodos);
+  const [checkingIds, setCheckingIds] = useState<number[]>([]);
 
   function deleteTodo(id: number) {
-    setToDos(todos.filter((todo) => todo.id !== id));
+    setToDos((prevTodos) => {
+      return prevTodos.filter((todo) => todo.id !== id);
+    });
   }
 
   function editTodo(id: number, title: string) {
@@ -49,6 +53,66 @@ export const ToDos = () => {
     });
   }
 
+  function createId() {
+    const maxId =
+      todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) : 0;
+    return maxId + 1;
+  }
+
+  function addToDo(title: string) {
+    setToDos([
+      ...todos,
+      {
+        title,
+        id: createId(),
+        isCompleted: false,
+        createdAt: new Date()
+          .toLocaleString('ja-JP', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })
+          .replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/, '$3-$1-$2 $4:$5'),
+      },
+    ]);
+  }
+
+  function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      setCheckingIds(todos.map((v) => v.id));
+    } else {
+      setCheckingIds([]);
+    }
+  }
+
+  function toggleCompleted({
+    id,
+    isChecked,
+  }: {
+    id: number;
+    isChecked: boolean;
+  }) {
+    setCheckingIds((prevState) =>
+      isChecked ? [...prevState, id] : prevState.filter((v) => v !== id)
+    );
+  }
+
+  function doCompleted() {
+    setToDos(
+      todos.map((v) => {
+        return checkingIds.includes(v.id)
+          ? {
+              ...v,
+              isCompleted: true,
+            }
+          : v;
+      })
+    );
+  }
+
   return (
     <article>
       <h1>ToDoリスト</h1>
@@ -56,7 +120,12 @@ export const ToDos = () => {
         todos={todos}
         onClickDelete={deleteTodo}
         onSubmitEdit={editTodo}
+        onChangeAllCheckIds={handleChangeAllCheckIds}
+        checkingIds={checkingIds}
+        onChangeCompleted={toggleCompleted}
+        onClickDoCompleted={doCompleted}
       />
+      <CreateTodo onSubmit={addToDo} />
     </article>
   );
 };

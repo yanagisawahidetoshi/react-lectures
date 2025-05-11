@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export const ToDos = () => {
   const initialTodos = [
     {
@@ -34,7 +32,8 @@ export const ToDos = () => {
     },
   ];
 
-  const [todos, setTodos] = useState(initialTodos);
+  // const [todos, setTodos] = useState(initialTodos);
+  console.log(initialTodos);
 
   return (
     <article>
