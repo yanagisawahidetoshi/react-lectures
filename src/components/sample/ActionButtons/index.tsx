@@ -1,4 +1,4 @@
-import * as styles from './styles.module.ts';
+import * as styles from './styles.ts';
 
 type Props = {
   onClickDelete: () => void;
