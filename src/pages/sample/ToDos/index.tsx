@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { ToDoList } from '../../../components/sample/ToDoList';
 
 export const ToDos = () => {
-  const todos = [
+  const initialTodos = [
     {
       id: 1,
       title: 'Todo 1',
@@ -34,10 +35,28 @@ export const ToDos = () => {
     },
   ];
 
+  const [todos, setToDos] = useState(initialTodos);
+
+  function deleteTodo(id: number) {
+    setToDos(todos.filter((todo) => todo.id !== id));
+  }
+
+  function editTodo(id: number, title: string) {
+    setToDos((prevTodos) => {
+      return prevTodos.map((todo) => {
+        return todo.id === id ? { ...todo, title } : todo;
+      });
+    });
+  }
+
   return (
     <article>
       <h1>ToDoリスト</h1>
-      <ToDoList todos={todos} />
+      <ToDoList
+        todos={todos}
+        onClickDelete={deleteTodo}
+        onSubmitEdit={editTodo}
+      />
     </article>
   );
 };
