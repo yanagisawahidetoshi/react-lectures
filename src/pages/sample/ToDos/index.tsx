@@ -61,22 +61,26 @@ export const ToDos = () => {
   }
 
   function addToDo(title: string) {
+    const date = new Date();
+    const formatter = new Intl.DateTimeFormat('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+    const parts = formatter.formatToParts(date);
+    const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+    const formatted = `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}`;
+
     setToDos([
       ...todos,
       {
         title,
         id: createId(),
         isCompleted: false,
-        createdAt: new Date()
-          .toLocaleString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          })
-          .replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/, '$3-$1-$2 $4:$5'),
+        createdAt: formatted,
       },
     ]);
   }
