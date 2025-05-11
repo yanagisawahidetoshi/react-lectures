@@ -38,3 +38,14 @@ export const dangerVariantStyle = css`
     opacity: 1;
   }
 `;
+
+export const defaultVariantStyle = css`
+  background-color: #fff;
+  color: #666;
+  border: 1px solid #666;
+
+  &:hover {
+    background-color: #fff;
+    opacity: 1;
+  }
+`;
