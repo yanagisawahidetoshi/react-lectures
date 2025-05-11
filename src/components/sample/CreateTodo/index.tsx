@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Input } from '../Input';
-import * as styles from './styles.module.ts';
+import { Button } from '../Button';
+import { Input } from '../Input'; // Inputコンポーネントのパスは環境に合わせてください
+import * as styles from './styles'; // .ts ファイルをインポート
 
 type Props = {
   onSubmit: (v: string) => void;
@@ -11,12 +12,12 @@ export const CreateTodo: React.FC<Props> = ({ onSubmit }) => {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!todo) {
+    if (!todo.trim()) {
       alert('タイトルを登録してください');
       return;
     }
-    setTodo('');
     onSubmit(todo);
+    setTodo('');
   }
 
   return (
@@ -31,9 +32,9 @@ export const CreateTodo: React.FC<Props> = ({ onSubmit }) => {
           onChange={(e) => setTodo(e.target.value)}
           id="title"
         />
-        <button type="submit" className={styles.submit}>
+        <Button variant="primary" type="submit">
           登録する
-        </button>
+        </Button>
       </div>
     </form>
   );
