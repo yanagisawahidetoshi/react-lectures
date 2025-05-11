@@ -14,3 +14,9 @@ export const editButton = css({
   background: 'blue',
   color: '#fff',
 });
+
+export const cancelButton = css({
+  background: '#fff',
+  color: '#333',
+  border: '1px solid #333',
+});

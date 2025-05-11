@@ -1,4 +1,4 @@
-import * as styles from './styles.module.ts';
+import * as styles from './styles.ts';
 
 type Props = {
   onClickDelete: () => void;
@@ -28,7 +28,9 @@ export const ActionButtons: React.FC<Props> = ({
           <button className={styles.editButton} onClick={onClickEditSubmit}>
             保存する
           </button>
-          <button onClick={onClickEditCancel}>キャンセル</button>
+          <button className={styles.cancelButton} onClick={onClickEditCancel}>
+            キャンセル
+          </button>
         </>
       ) : (
         <button className={styles.editButton} onClick={onClickEdit}>
