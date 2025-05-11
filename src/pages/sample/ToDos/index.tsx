@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CreateTodo } from '../../../components/sample/CreateTodo';
+import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
 import { ToDoList } from '../../../components/sample/ToDoList';
 
 export const ToDos = () => {
@@ -38,6 +38,7 @@ export const ToDos = () => {
 
   const [todos, setToDos] = useState(initialTodos);
   const [checkingIds, setCheckingIds] = useState<number[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function deleteTodo(id: number) {
     setToDos((prevTodos) => {
@@ -125,7 +126,27 @@ export const ToDos = () => {
         onChangeCompleted={toggleCompleted}
         onClickDoCompleted={doCompleted}
       />
-      <CreateTodo onSubmit={addToDo} />
+      <button
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        ToDoを追加
+      </button>
+      <CreateTodoModal
+        onSubmit={addToDo}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </article>
   );
 };
