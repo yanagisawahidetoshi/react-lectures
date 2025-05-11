@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button } from '../Button/index.tsx';
 import { Input } from '../Input';
 import * as styles from './styles.ts';
 
@@ -31,9 +32,9 @@ export const CreateTodo: React.FC<Props> = ({ onSubmit }) => {
           onChange={(e) => setTodo(e.target.value)}
           id="title"
         />
-        <button type="submit" className={styles.submit}>
+        <Button variant="primary" type="submit">
           登録する
-        </button>
+        </Button>
       </div>
     </form>
   );

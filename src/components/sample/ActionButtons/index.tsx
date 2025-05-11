@@ -1,3 +1,4 @@
+import { Button } from '../Button/index.tsx';
 import * as styles from './styles.ts';
 
 type Props = {
@@ -25,22 +26,22 @@ export const ActionButtons: React.FC<Props> = ({
     <div className={styles.container}>
       {isEdit ? (
         <>
-          <button className={styles.editButton} onClick={onClickEditSubmit}>
+          <Button variant="primary" onClick={onClickEditSubmit}>
             保存する
-          </button>
-          <button className={styles.cancelButton} onClick={onClickEditCancel}>
+          </Button>
+          <Button variant="default" onClick={onClickEditCancel}>
             キャンセル
-          </button>
+          </Button>
         </>
       ) : (
-        <button className={styles.editButton} onClick={onClickEdit}>
+        <Button variant="primary" onClick={onClickEdit}>
           編集する
-        </button>
+        </Button>
       )}
 
-      <button className={styles.deleteButton} onClick={handleClickDelete}>
+      <Button variant="danger" onClick={handleClickDelete}>
         削除する
-      </button>
+      </Button>
     </div>
   );
 };
