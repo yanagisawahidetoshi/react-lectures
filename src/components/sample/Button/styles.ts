@@ -1,4 +1,3 @@
-// src/components/StyledButton/buttonStyles.ts
 import { css } from '@emotion/css';
 
 export const baseStyle = css`

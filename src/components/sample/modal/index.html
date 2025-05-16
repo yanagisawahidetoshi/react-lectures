@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>z-indexと重なり順のデモ</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>ページのヘッダー</h1>
+      <p>これはヘッダーコンテンツです。</p>
+    </header>
+
+    <main>
+      <h2>メインコンテンツエリア</h2>
+      <div class="box box1">ボックス1 (z-index: 1)</div>
+      <div class="box box2">ボックス2 (z-index: 2, position: relative)</div>
+      <div class="box box3">
+        ボックス3 (z-index: 未指定, position: relative)
+      </div>
+      <p>ここにたくさんのコンテンツがあると仮定します...</p>
+      <button id="openModal">モーダルを開く</button>
+      <div id="modalOverlay" class="modal-overlay">
+        <div id="modalContent" class="modal-content">
+          <h3>モーダルウィンドウ2</h3>
+          <p>これはモーダルコンテンツ2です。</p>
+          <p>他の全てのコンテンツよりも前面に表示されています。aaa</p>
+          <button id="closeModal">閉じる</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>フッターコンテンツ</p>
+    </footer>
+
+    <div id="modalOverlay" class="modal-overlay">
+      <div id="modalContent" class="modal-content">
+        <h3>モーダルウィンドウ</h3>
+        <p>これはモーダルコンテンツです。</p>
+        <p>他の全てのコンテンツよりも前面に表示されています。</p>
+        <button id="closeModal">閉じる</button>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 import { Button } from '../Button/index.tsx';
-import * as styles from './styles.module.ts';
+import * as styles from './styles.ts';
 
 type Props = {
   onClickDelete: () => void;
@@ -38,6 +38,10 @@ export const ActionButtons: React.FC<Props> = ({
           編集する
         </Button>
       )}
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/profile
       <Button variant="danger" onClick={handleClickDelete}>
         削除する
       </Button>
