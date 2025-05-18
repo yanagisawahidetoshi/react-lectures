@@ -38,10 +38,6 @@ export const ActionButtons: React.FC<Props> = ({
           編集する
         </Button>
       )}
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/profile
       <Button variant="danger" onClick={handleClickDelete}>
         削除する
       </Button>
