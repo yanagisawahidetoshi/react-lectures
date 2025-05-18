@@ -1,9 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
 import { ToDoList } from '../../../components/sample/ToDoList';
-import { createId, createTodo } from '../../../libs/createTodo';
+
+import {
+  CheckingIdsDispatchContext,
+  CheckingIdsStateContext,
+  TCheckingIdsState,
+} from '../../../sample/contexts/checkingIds/context';
+import { createTodo, createId } from '../../../libs/createTodo';
 
 export const ToDos = () => {
+  const dispatch = useContext(CheckingIdsDispatchContext);
+  const checkingIds = useContext(CheckingIdsStateContext) as TCheckingIdsState;
+
   const initialTodos = [
     {
       id: 1,
@@ -38,7 +47,6 @@ export const ToDos = () => {
   ];
 
   const [todos, setToDos] = useState(initialTodos);
-  const [checkingIds, setCheckingIds] = useState<number[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function deleteTodo(id: number) {
@@ -61,10 +69,11 @@ export const ToDos = () => {
   }
 
   function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!dispatch) return;
     if (e.target.checked) {
-      setCheckingIds(todos.map((v) => v.id));
+      dispatch({ type: 'ADD_CHECKING_ID', payload: todos.map((v) => v.id)[0] });
     } else {
-      setCheckingIds([]);
+      dispatch({ type: 'REMOVE_CHECKING_ID', payload: 0 });
     }
   }
 
@@ -75,9 +84,12 @@ export const ToDos = () => {
     id: number;
     isChecked: boolean;
   }) {
-    setCheckingIds((prevState) =>
-      isChecked ? [...prevState, id] : prevState.filter((v) => v !== id)
-    );
+    if (!dispatch) return;
+    if (isChecked) {
+      dispatch({ type: 'ADD_CHECKING_ID', payload: id });
+    } else {
+      dispatch({ type: 'REMOVE_CHECKING_ID', payload: id });
+    }
   }
 
   function doCompleted() {
