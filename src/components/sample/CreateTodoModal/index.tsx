@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { CreateTodo } from '../CreateTodo';
 import * as modalStyles from './styles';
@@ -18,37 +18,6 @@ export const CreateTodoModal: React.FC<Props> = ({
 }) => {
   const modalContentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalContentRef.current &&
-        !modalContentRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
-
   if (!isOpen || !portalTargetElement) {
     return null;
   }
@@ -59,8 +28,17 @@ export const CreateTodoModal: React.FC<Props> = ({
   };
 
   return ReactDOM.createPortal(
-    <div className={modalStyles.overlay} role="dialog" aria-modal="true">
-      <div className={modalStyles.content} ref={modalContentRef}>
+    <div
+      className={modalStyles.overlay}
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
+      <div
+        className={modalStyles.content}
+        ref={modalContentRef}
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           onClick={onClose}
           className={modalStyles.closeButton}
