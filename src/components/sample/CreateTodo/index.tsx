@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from '../Button/index.tsx';
+import { Button } from '../Button';
 import { Input } from '../Input';
-import * as styles from './styles.ts';
+import * as styles from './styles';
 
 type Props = {
   onSubmit: (v: string) => void;
@@ -12,12 +12,12 @@ export const CreateTodo: React.FC<Props> = ({ onSubmit }) => {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!todo) {
+    if (!todo.trim()) {
       alert('タイトルを登録してください');
       return;
     }
-    setTodo('');
     onSubmit(todo);
+    setTodo('');
   }
 
   return (

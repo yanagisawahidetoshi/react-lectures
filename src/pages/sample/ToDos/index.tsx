@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { CreateTodo } from '../../../components/sample/CreateTodo';
+import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
 import { ToDoList } from '../../../components/sample/ToDoList';
+import { createId, createTodo } from '../../../libs/createTodo';
 
 export const ToDos = () => {
   const initialTodos = [
@@ -38,6 +39,7 @@ export const ToDos = () => {
 
   const [todos, setToDos] = useState(initialTodos);
   const [checkingIds, setCheckingIds] = useState<number[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function deleteTodo(id: number) {
     setToDos((prevTodos) => {
@@ -53,31 +55,9 @@ export const ToDos = () => {
     });
   }
 
-  function createId() {
-    const maxId =
-      todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) : 0;
-    return maxId + 1;
-  }
-
   function addToDo(title: string) {
-    setToDos([
-      ...todos,
-      {
-        title,
-        id: createId(),
-        isCompleted: false,
-        createdAt: new Date()
-          .toLocaleString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          })
-          .replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/, '$3-$1-$2 $4:$5'),
-      },
-    ]);
+    const newTodo = createTodo(title, createId(todos));
+    setToDos([...todos, newTodo]);
   }
 
   function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
@@ -125,7 +105,27 @@ export const ToDos = () => {
         onChangeCompleted={toggleCompleted}
         onClickDoCompleted={doCompleted}
       />
-      <CreateTodo onSubmit={addToDo} />
+      <button
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        ToDoを追加
+      </button>
+      <CreateTodoModal
+        onSubmit={addToDo}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </article>
   );
 };
