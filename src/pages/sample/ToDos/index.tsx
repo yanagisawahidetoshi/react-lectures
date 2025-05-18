@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
 import { ToDoList } from '../../../components/sample/ToDoList';
-import { createId, createTodo } from '../../../libs/createTodo';
+import {
+  createId,
+  createTodo,
+} from '../../../components/sample/libs/createTodo';
 
 export const ToDos = () => {
   const initialTodos = [
