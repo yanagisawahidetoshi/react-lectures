@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
 import { ToDoList } from '../../../components/sample/ToDoList';
+import { createId, createTodo } from '../../../libs/createTodo';
 
 export const ToDos = () => {
   const initialTodos = [
@@ -54,35 +55,9 @@ export const ToDos = () => {
     });
   }
 
-  function createId() {
-    const maxId =
-      todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) : 0;
-    return maxId + 1;
-  }
-
   function addToDo(title: string) {
-    const date = new Date();
-    const formatter = new Intl.DateTimeFormat('ja-JP', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-    const parts = formatter.formatToParts(date);
-    const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
-    const formatted = `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}`;
-
-    setToDos([
-      ...todos,
-      {
-        title,
-        id: createId(),
-        isCompleted: false,
-        createdAt: formatted,
-      },
-    ]);
+    const newTodo = createTodo(title, createId(todos));
+    setToDos([...todos, newTodo]);
   }
 
   function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
