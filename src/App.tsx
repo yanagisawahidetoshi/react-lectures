@@ -5,7 +5,7 @@ import './App.css';
 import { ToDos } from './pages/ToDos';
 import { Profile } from './pages/sample/Profile';
 import { ToDos as ToDosSample } from './pages/sample/ToDos';
-import { CheckingIdsProvider } from './sample/contexts/checkingIds/context';
+import { CheckingIdsProvider } from './sample/contexts/checkingIds/provider';
 
 function App() {
   return (

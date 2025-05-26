@@ -5,10 +5,16 @@ export const reducer = (
   action: TCheckingIdsActions
 ) => {
   switch (action.type) {
-    case 'ADD_CHECKING_ID':
-      return [...state, action.payload];
-    case 'REMOVE_CHECKING_ID':
+    case 'ADD_ID':
+      return state.includes(action.payload)
+        ? [...state]
+        : [...state, action.payload];
+    case 'REMOVE_ID':
       return state.filter((id) => id !== action.payload);
+    case 'CLEAR_IDS':
+      return [];
+    case 'SET_IDS':
+      return action.payload;
     default:
       return state;
   }

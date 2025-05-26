@@ -1,17 +1,13 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
 import { ToDoList } from '../../../components/sample/ToDoList';
 
-import {
-  CheckingIdsDispatchContext,
-  CheckingIdsStateContext,
-  TCheckingIdsState,
-} from '../../../sample/contexts/checkingIds/context';
-import { createTodo, createId } from '../../../libs/createTodo';
+import { createId, createTodo } from '../../../libs/createTodo';
+import { useCheckingIdsState } from '../../../sample/contexts/checkingIds/contexts';
+import * as styles from './styles';
 
 export const ToDos = () => {
-  const dispatch = useContext(CheckingIdsDispatchContext);
-  const checkingIds = useContext(CheckingIdsStateContext) as TCheckingIdsState;
+  const checkingIds = useCheckingIdsState();
 
   const initialTodos = [
     {
@@ -68,30 +64,6 @@ export const ToDos = () => {
     setToDos([...todos, newTodo]);
   }
 
-  function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!dispatch) return;
-    if (e.target.checked) {
-      dispatch({ type: 'ADD_CHECKING_ID', payload: todos.map((v) => v.id)[0] });
-    } else {
-      dispatch({ type: 'REMOVE_CHECKING_ID', payload: 0 });
-    }
-  }
-
-  function toggleCompleted({
-    id,
-    isChecked,
-  }: {
-    id: number;
-    isChecked: boolean;
-  }) {
-    if (!dispatch) return;
-    if (isChecked) {
-      dispatch({ type: 'ADD_CHECKING_ID', payload: id });
-    } else {
-      dispatch({ type: 'REMOVE_CHECKING_ID', payload: id });
-    }
-  }
-
   function doCompleted() {
     setToDos(
       todos.map((v) => {
@@ -112,24 +84,14 @@ export const ToDos = () => {
         todos={todos}
         onClickDelete={deleteTodo}
         onSubmitEdit={editTodo}
-        onChangeAllCheckIds={handleChangeAllCheckIds}
         checkingIds={checkingIds}
-        onChangeCompleted={toggleCompleted}
         onClickDoCompleted={doCompleted}
       />
       <button
         onClick={() => {
           setIsModalOpen(true);
         }}
-        style={{
-          marginTop: '20px',
-          padding: '10px 20px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
+        className={styles.AddToDoButton}
       >
         ToDoを追加
       </button>

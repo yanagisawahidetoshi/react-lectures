@@ -1,13 +1,22 @@
 export type TCheckingIdsState = number[];
 
-export type AddCheckingIdAction = {
-  type: 'ADD_CHECKING_ID';
+export type AddID = {
+  type: 'ADD_ID';
   payload: number;
 };
 
-export type RemoveCheckingIdAction = {
-  type: 'REMOVE_CHECKING_ID';
+export type RemoveID = {
+  type: 'REMOVE_ID';
   payload: number;
 };
 
-export type TCheckingIdsActions = AddCheckingIdAction | RemoveCheckingIdAction;
+export type ClearIds = {
+  type: 'CLEAR_IDS';
+};
+
+export type SetIds = {
+  type: 'SET_IDS';
+  payload: number[];
+};
+
+export type TCheckingIdsActions = AddID | RemoveID | ClearIds | SetIds;
