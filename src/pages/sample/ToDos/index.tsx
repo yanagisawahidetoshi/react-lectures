@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
+import {
+  createId,
+  createTodo,
+} from '../../../components/sample/libs/createTodo';
 import { ToDoList } from '../../../components/sample/ToDoList';
-
-import { createId, createTodo } from '../../../libs/createTodo';
 import { useCheckingIdsState } from '../../../sample/contexts/checkingIds/contexts';
 import * as styles from './styles';
 
