@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 
-export const Name = () => {
+export const Name = ({ name }: TNameProps) => {
   return (
     <h1
       style={{

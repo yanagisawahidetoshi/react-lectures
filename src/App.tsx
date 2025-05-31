@@ -10,14 +10,19 @@ import { CheckingIdsProvider } from './sample/contexts/checkingIds/provider';
 function App() {
   return (
     <div>
-      <CheckingIdsProvider>
-        <Routes>
-          <Route path="/lesson1" element={<Lesson1 />} />
-          <Route path="/to-dos" element={<ToDos />} />
-          <Route path="/to-do-sample" element={<ToDosSample />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </CheckingIdsProvider>
+      <Routes>
+        <Route path="/lesson1" element={<Lesson1 />} />
+        <Route path="/to-dos" element={<ToDos />} />
+        <Route
+          path="/to-do-sample"
+          element={
+            <CheckingIdsProvider>
+              <ToDosSample />
+            </CheckingIdsProvider>
+          }
+        />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
     </div>
   );
 }
