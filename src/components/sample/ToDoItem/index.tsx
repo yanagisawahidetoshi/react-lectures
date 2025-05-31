@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCheckingIdsDispatch } from '../../../sample/contexts/checkingIds/contexts';
 import { ToDo } from '../../../types';
 import { ActionButtons } from '../ActionButtons';
 import { EditableItem } from '../EditableItem';
@@ -8,13 +9,6 @@ export type Props = {
   onSubmitEdit: (id: number, title: string) => void;
   onClickDelete: (id: number) => void;
   isChecked: boolean;
-  onChangeCompleted: ({
-    id,
-    isChecked,
-  }: {
-    id: number;
-    isChecked: boolean;
-  }) => void;
 };
 
 export const ToDoItem: React.FC<Props> = ({
@@ -22,11 +16,10 @@ export const ToDoItem: React.FC<Props> = ({
   onClickDelete,
   onSubmitEdit,
   isChecked,
-  onChangeCompleted,
 }) => {
   const [editingTitle, setEditingTitle] = useState(todo.title);
   const [isEdit, setIsEdit] = useState(false);
-
+  const dispatch = useCheckingIdsDispatch();
   function handleClickEdit() {
     setIsEdit(true);
   }
@@ -41,18 +34,21 @@ export const ToDoItem: React.FC<Props> = ({
     setEditingTitle(todo.title);
   }
 
+  function handleChangeCompleted(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      dispatch({ type: 'ADD_ID', payload: todo.id });
+    } else {
+      dispatch({ type: 'REMOVE_ID', payload: todo.id });
+    }
+  }
+
   return (
     <>
       <td>
         <input
           type="checkbox"
           checked={isChecked}
-          onChange={(e) =>
-            onChangeCompleted({
-              id: todo.id,
-              isChecked: e.target.checked,
-            })
-          }
+          onChange={handleChangeCompleted}
         />
       </td>
       <td>{todo.id}</td>
