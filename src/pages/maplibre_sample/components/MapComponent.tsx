@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, memo } from 'react';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useMap } from '../context/useMap';
-import { css } from '@emotion/css';
+import { mapCenterIconWrapperStyle, mapComponentStyle } from './style';
 
 /**
  * MapComponentは、Maplibreの地図を表示するコンポーネントです。
@@ -15,7 +15,8 @@ import { css } from '@emotion/css';
  */
 export const MapComponent: React.NamedExoticComponent<{
   hideCenterIcon?: boolean; // 中心アイコンを非表示にするオプション
-}> = memo(({ hideCenterIcon }) => {
+  centerIconStrokeColor?: string; // ストロークの色を指定するオプション
+}> = memo(({ hideCenterIcon, centerIconStrokeColor }) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const { map } = useMap();
 
@@ -25,30 +26,13 @@ export const MapComponent: React.NamedExoticComponent<{
     }
   }, [map]);
 
-  const strokeColor = 'rgba(100,100,100,0.75)'; // ストロークの色を定義
+  // ストロークの色を定義
+  const strokeColor = centerIconStrokeColor ?? 'rgba(100,100,100,0.75)';
 
   return (
-    <div
-      ref={mapContainerRef}
-      id="map"
-      className={css({
-        position: 'relative',
-        height: 'calc(100% - 40px)',
-        width: '100%',
-      })}
-    >
+    <div ref={mapContainerRef} id="map" className={mapComponentStyle}>
       {!hideCenterIcon && (
-        <div
-          id="icon-center"
-          className={css({
-            position: 'absolute',
-            top: '50%',
-            left: ' 50%',
-            transform: ' translate(-50%, -50%)',
-            pointerEvents: 'none',
-            zIndex: 1,
-          })}
-        >
+        <div id="icon-center" className={mapCenterIconWrapperStyle}>
           {/* 中心マーク */}
           <svg
             focusable="false"

@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { css, cx } from '@emotion/css';
+import { cx } from '@emotion/css';
 import React, { HtmlHTMLAttributes } from 'react';
+import { topBarStyle } from './style';
 
 /**
  * TopBarコンポーネント。
@@ -14,23 +15,7 @@ export const TopBar: React.FC<HtmlHTMLAttributes<HTMLDivElement>> = ({
   ...rest
 }) => {
   return (
-    <div
-      className={cx(
-        css({
-          height: '40px',
-          width: '100%',
-          backgroundColor: '#333',
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          gap: '8px',
-          padding: '0 16px',
-        }),
-        className
-      )}
-      {...rest}
-    >
+    <div className={cx(topBarStyle, className)} {...rest}>
       {children}
     </div>
   );
