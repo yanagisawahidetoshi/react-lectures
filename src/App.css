@@ -4,9 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 #root {
-  max-width: 1280px;
+  /* 地図表示向けに大きさ制限などは解除 */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
 }
 
