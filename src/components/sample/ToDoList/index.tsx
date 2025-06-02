@@ -1,4 +1,4 @@
-import { useCheckingIdsDispatch } from '../../../sample/contexts/checkingIds/contexts.tsx';
+import { useCheckingIdsDispatch } from '../../../sample/contexts/checkingIds/contexts.ts';
 import type { ToDo } from '../../../types';
 import { ToDoItem } from '../ToDoItem';
 import * as styles from './styles.ts';
