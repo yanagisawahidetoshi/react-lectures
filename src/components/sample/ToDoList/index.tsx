@@ -1,6 +1,7 @@
-import { useCheckingIdsDispatch } from '../../../sample/contexts/checkingIds/contexts.ts';
 import type { ToDo } from '../../../types';
 import { ToDoItem } from '../ToDoItem';
+import { useToDoListCheck } from './hooks/useToDoListCheck';
+import { useToDoListSort } from './hooks/useToDoListSort';
 import * as styles from './styles.ts';
 
 export type Props = {
@@ -18,18 +19,8 @@ export const ToDoList: React.FC<Props> = ({
   checkingIds,
   onClickDoCompleted,
 }) => {
-  const dispatch = useCheckingIdsDispatch();
-  const sortedTodos = [...todos].sort(
-    (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)
-  );
-
-  function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      dispatch({ type: 'SET_IDS', payload: todos.map((v) => v.id) });
-    } else {
-      dispatch({ type: 'CLEAR_IDS' });
-    }
-  }
+  const { sortedTodos } = useToDoListSort(todos);
+  const { handleChangeAllCheckIds } = useToDoListCheck(todos);
 
   return (
     <>
@@ -42,7 +33,10 @@ export const ToDoList: React.FC<Props> = ({
         <thead>
           <tr>
             <th>
-              <input type="checkbox" onChange={handleChangeAllCheckIds} />
+              <input
+                type="checkbox"
+                onChange={(e) => handleChangeAllCheckIds(e.target.checked)}
+              />
             </th>
             <th>ID</th>
             <th>Title</th>

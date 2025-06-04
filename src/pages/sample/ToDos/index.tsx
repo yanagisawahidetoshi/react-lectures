@@ -1,16 +1,10 @@
-import { useState } from 'react';
 import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
-import {
-  createId,
-  createTodo,
-} from '../../../components/sample/libs/createTodo';
 import { ToDoList } from '../../../components/sample/ToDoList';
-import { useCheckingIdsState } from '../../../sample/contexts/checkingIds/contexts';
+import { useModal } from './hooks/useModal';
+import { useToDosActions } from './hooks/useToDosActions';
 import * as styles from './styles';
 
 export const ToDos = () => {
-  const checkingIds = useCheckingIdsState();
-
   const initialTodos = [
     {
       id: 1,
@@ -44,40 +38,9 @@ export const ToDos = () => {
     },
   ];
 
-  const [todos, setToDos] = useState(initialTodos);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function deleteTodo(id: number) {
-    setToDos((prevTodos) => {
-      return prevTodos.filter((todo) => todo.id !== id);
-    });
-  }
-
-  function editTodo(id: number, title: string) {
-    setToDos((prevTodos) => {
-      return prevTodos.map((todo) => {
-        return todo.id === id ? { ...todo, title } : todo;
-      });
-    });
-  }
-
-  function addToDo(title: string) {
-    const newTodo = createTodo(title, createId(todos));
-    setToDos([...todos, newTodo]);
-  }
-
-  function doCompleted() {
-    setToDos(
-      todos.map((v) => {
-        return checkingIds.includes(v.id)
-          ? {
-              ...v,
-              isCompleted: true,
-            }
-          : v;
-      })
-    );
-  }
+  const { isModalOpen, setIsModalOpen } = useModal();
+  const { deleteTodo, editTodo, addToDo, doCompleted, checkingIds, todos } =
+    useToDosActions(initialTodos);
 
   return (
     <article>
