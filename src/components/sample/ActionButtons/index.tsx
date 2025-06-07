@@ -1,4 +1,5 @@
 import { Button } from '../Button/index.tsx';
+import { useActionButtons } from './hooks/useActionButtons';
 import * as styles from './styles.ts';
 
 type Props = {
@@ -16,11 +17,7 @@ export const ActionButtons: React.FC<Props> = ({
   onClickEditSubmit,
   onClickEditCancel,
 }) => {
-  function handleClickDelete() {
-    if (window.confirm('本当に削除しますか？')) {
-      onClickDelete();
-    }
-  }
+  const { handleClickDelete } = useActionButtons(onClickDelete);
 
   return (
     <div className={styles.container}>

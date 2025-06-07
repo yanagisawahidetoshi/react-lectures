@@ -1,24 +1,14 @@
-import { useState } from 'react';
 import { Button } from '../Button';
 import { Input } from '../Input';
+import { useCreateTodo } from './hooks/useCreateTodo';
 import * as styles from './styles';
 
-type Props = {
+export type Props = {
   onSubmit: (v: string) => void;
 };
 
 export const CreateTodo: React.FC<Props> = ({ onSubmit }) => {
-  const [todo, setTodo] = useState('');
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (!todo.trim()) {
-      alert('タイトルを登録してください');
-      return;
-    }
-    onSubmit(todo);
-    setTodo('');
-  }
+  const { todo, setTodo, handleSubmit } = useCreateTodo(onSubmit);
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>

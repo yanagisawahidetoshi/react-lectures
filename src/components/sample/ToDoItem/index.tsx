@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useCheckingIdsDispatch } from '../../../sample/contexts/checkingIds/contexts';
 import { ToDo } from '../../../types';
 import { ActionButtons } from '../ActionButtons';
 import { EditableItem } from '../EditableItem';
+import { useToDoItemCheck } from './hooks/useToDoItemCheck';
+import { useToDoItemEdit } from './hooks/useToDoItemEdit';
 
 export type Props = {
   todo: ToDo;
@@ -17,30 +17,16 @@ export const ToDoItem: React.FC<Props> = ({
   onSubmitEdit,
   isChecked,
 }) => {
-  const [editingTitle, setEditingTitle] = useState(todo.title);
-  const [isEdit, setIsEdit] = useState(false);
-  const dispatch = useCheckingIdsDispatch();
-  function handleClickEdit() {
-    setIsEdit(true);
-  }
+  const {
+    isEdit,
+    handleCancelEdit,
+    handleClickEdit,
+    handleEditSubmit,
+    editingTitle,
+    setEditingTitle,
+  } = useToDoItemEdit(todo, onSubmitEdit);
 
-  function handleEditSubmit() {
-    setIsEdit(false);
-    onSubmitEdit(todo.id, editingTitle);
-  }
-
-  function handleCancelEdit() {
-    setIsEdit(false);
-    setEditingTitle(todo.title);
-  }
-
-  function handleChangeCompleted(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      dispatch({ type: 'ADD_ID', payload: todo.id });
-    } else {
-      dispatch({ type: 'REMOVE_ID', payload: todo.id });
-    }
-  }
+  const { handleChangeCompleted } = useToDoItemCheck(todo.id);
 
   return (
     <>
