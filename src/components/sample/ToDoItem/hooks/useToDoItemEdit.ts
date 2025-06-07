@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Props } from '..';
+import type { Props } from '..';
 
 type UseToDoItemEditReturn = {
   handleClickEdit: () => void;
