@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-export type UseModalStateReturn = {
+export type UseModalReturn = {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const useModalState = (): UseModalStateReturn => {
+export const useModal = (): UseModalReturn => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return {
