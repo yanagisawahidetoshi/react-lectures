@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useContext } from 'react';
 import { MapContext } from './MapContext';
 

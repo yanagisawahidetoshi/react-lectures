@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 
-import React, { useRef, useEffect, memo } from 'react';
+import React, { useRef, useEffect, memo, useState } from 'react';
+import maplibregl from 'maplibre-gl';
+import axios from 'axios';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useMap } from '../context/useMap';
 import { mapCenterIconWrapperStyle, mapComponentStyle } from './style';
@@ -13,18 +15,82 @@ import { mapCenterIconWrapperStyle, mapComponentStyle } from './style';
  * @param {boolean} [props.hideCenterIcon=false] - 中心アイコンを非表示にするかどうか
  * @returns {JSX.Element} - MapComponent
  */
+interface LocationData {
+  id: string;
+  name: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
+  address: string;
+}
+
 export const MapComponent: React.NamedExoticComponent<{
   hideCenterIcon?: boolean; // 中心アイコンを非表示にするオプション
   centerIconStrokeColor?: string; // ストロークの色を指定するオプション
 }> = memo(({ hideCenterIcon, centerIconStrokeColor }) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const { map } = useMap();
+  const [locations, setLocations] = useState<LocationData[]>([]);
+  const markersRef = useRef<maplibregl.Marker[]>([]);
 
+  // APIからすべての場所のデータを取得
   useEffect(() => {
-    if (map && mapContainerRef.current) {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get<LocationData[]>('/api/locations');
+        setLocations(response.data);
+      } catch (error) {
+        console.error('Failed to fetch locations:', error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
+
+  // マップと場所データが準備できたらマーカーを追加
+  useEffect(() => {
+    if (map && mapContainerRef.current && locations.length > 0) {
       map.resize();
+
+      // 既存のマーカーをクリア
+      markersRef.current.forEach((marker) => marker.remove());
+      markersRef.current = [];
+
+      // 各場所にマーカーを追加
+      locations.forEach((location) => {
+        const marker = new maplibregl.Marker()
+          .setLngLat([location.location.lng, location.location.lat])
+          .addTo(map);
+
+        // ポップアップを追加
+        const popup = new maplibregl.Popup({ offset: 25 }).setHTML(`
+            <div style="padding: 8px;">
+              <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: bold;">${location.name}</h3>
+              <p style="margin: 0; font-size: 12px; color: #666;">${location.address}</p>
+            </div>
+          `);
+
+        marker.setPopup(popup);
+        markersRef.current.push(marker);
+      });
+
+      // すべてのマーカーが表示されるようにビューを調整
+      if (locations.length > 1) {
+        const bounds = new maplibregl.LngLatBounds();
+        locations.forEach((location) => {
+          bounds.extend([location.location.lng, location.location.lat]);
+        });
+        map.fitBounds(bounds, { padding: 50 });
+      }
+
+      // クリーンアップ関数でマーカーを削除
+      return () => {
+        markersRef.current.forEach((marker) => marker.remove());
+        markersRef.current = [];
+      };
     }
-  }, [map]);
+  }, [map, locations]);
 
   // ストロークの色を定義
   const strokeColor = centerIconStrokeColor ?? 'rgba(100,100,100,0.75)';
