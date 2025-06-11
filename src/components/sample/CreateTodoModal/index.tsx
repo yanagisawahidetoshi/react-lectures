@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { CreateTodo } from '../CreateTodo';
+import { useCreateTodoModal } from './hooks/useCreateTodoModal';
 import * as modalStyles from './styles';
 
-type Props = {
+export type Props = {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (todoTitle: string) => void;
@@ -16,16 +17,14 @@ export const CreateTodoModal: React.FC<Props> = ({
   onClose,
   onSubmit,
 }) => {
-  const modalContentRef = useRef<HTMLDivElement>(null);
+  const { modalContentRef, handleSubmitAndClose } = useCreateTodoModal(
+    onSubmit,
+    onClose
+  );
 
   if (!isOpen || !portalTargetElement) {
     return null;
   }
-
-  const handleSubmitAndClose = (todoTitle: string) => {
-    onSubmit(todoTitle);
-    onClose();
-  };
 
   return ReactDOM.createPortal(
     <div
