@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 
-export const Name = () => {
+export const Name = ({ name }: TNameProps) => {
   return (
     <h1
       style={{
@@ -40,15 +40,31 @@ export const Profile = () => {
   return (
     <section>
       <Name />
-      <p>情報</p>
       <div
         style={{
           marginTop: '32px',
+          position: 'relative',
         }}
       >
+        <p
+          style={{
+            backgroundColor: '#FF0000',
+            position: 'absolute',
+            top: 0,
+          }}
+        >
+          Absolute
+        </p>
         <Contents />
       </div>
-      <footer>copyright &copy; 2023 Hidetoshi Yanagisawa</footer>
+      <footer
+        style={{
+          position: 'absolute',
+          bottom: 0,
+        }}
+      >
+        copyright &copy; 2023 Hidetoshi Yanagisawa
+      </footer>
     </section>
   );
 };

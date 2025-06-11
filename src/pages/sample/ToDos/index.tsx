@@ -1,6 +1,8 @@
-import { useState } from 'react';
 import { CreateTodoModal } from '../../../components/sample/CreateTodoModal';
 import { ToDoList } from '../../../components/sample/ToDoList';
+import { useModal } from './hooks/useModal';
+import { useToDosActions } from './hooks/useToDosActions';
+import * as styles from './styles';
 
 export const ToDos = () => {
   const initialTodos = [
@@ -36,87 +38,9 @@ export const ToDos = () => {
     },
   ];
 
-  const [todos, setToDos] = useState(initialTodos);
-  const [checkingIds, setCheckingIds] = useState<number[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function deleteTodo(id: number) {
-    setToDos((prevTodos) => {
-      return prevTodos.filter((todo) => todo.id !== id);
-    });
-  }
-
-  function editTodo(id: number, title: string) {
-    setToDos((prevTodos) => {
-      return prevTodos.map((todo) => {
-        return todo.id === id ? { ...todo, title } : todo;
-      });
-    });
-  }
-
-  function createId() {
-    const maxId =
-      todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) : 0;
-    return maxId + 1;
-  }
-
-  function addToDo(title: string) {
-    const date = new Date();
-    const formatter = new Intl.DateTimeFormat('ja-JP', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-    const parts = formatter.formatToParts(date);
-    const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
-    const formatted = `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}`;
-
-    setToDos([
-      ...todos,
-      {
-        title,
-        id: createId(),
-        isCompleted: false,
-        createdAt: formatted,
-      },
-    ]);
-  }
-
-  function handleChangeAllCheckIds(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      setCheckingIds(todos.map((v) => v.id));
-    } else {
-      setCheckingIds([]);
-    }
-  }
-
-  function toggleCompleted({
-    id,
-    isChecked,
-  }: {
-    id: number;
-    isChecked: boolean;
-  }) {
-    setCheckingIds((prevState) =>
-      isChecked ? [...prevState, id] : prevState.filter((v) => v !== id)
-    );
-  }
-
-  function doCompleted() {
-    setToDos(
-      todos.map((v) => {
-        return checkingIds.includes(v.id)
-          ? {
-              ...v,
-              isCompleted: true,
-            }
-          : v;
-      })
-    );
-  }
+  const { isModalOpen, setIsModalOpen } = useModal();
+  const { deleteTodo, editTodo, addToDo, doCompleted, checkingIds, todos } =
+    useToDosActions(initialTodos);
 
   return (
     <article>
@@ -125,24 +49,14 @@ export const ToDos = () => {
         todos={todos}
         onClickDelete={deleteTodo}
         onSubmitEdit={editTodo}
-        onChangeAllCheckIds={handleChangeAllCheckIds}
         checkingIds={checkingIds}
-        onChangeCompleted={toggleCompleted}
         onClickDoCompleted={doCompleted}
       />
       <button
         onClick={() => {
           setIsModalOpen(true);
         }}
-        style={{
-          marginTop: '20px',
-          padding: '10px 20px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
+        className={styles.AddToDoButton}
       >
         ToDoを追加
       </button>

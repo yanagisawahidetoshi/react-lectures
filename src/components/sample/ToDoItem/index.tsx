@@ -1,20 +1,14 @@
-import { useState } from 'react';
 import { ToDo } from '../../../types';
 import { ActionButtons } from '../ActionButtons';
 import { EditableItem } from '../EditableItem';
+import { useToDoItemCheck } from './hooks/useToDoItemCheck';
+import { useToDoItemEdit } from './hooks/useToDoItemEdit';
 
 export type Props = {
   todo: ToDo;
   onSubmitEdit: (id: number, title: string) => void;
   onClickDelete: (id: number) => void;
   isChecked: boolean;
-  onChangeCompleted: ({
-    id,
-    isChecked,
-  }: {
-    id: number;
-    isChecked: boolean;
-  }) => void;
 };
 
 export const ToDoItem: React.FC<Props> = ({
@@ -22,24 +16,17 @@ export const ToDoItem: React.FC<Props> = ({
   onClickDelete,
   onSubmitEdit,
   isChecked,
-  onChangeCompleted,
 }) => {
-  const [editingTitle, setEditingTitle] = useState(todo.title);
-  const [isEdit, setIsEdit] = useState(false);
+  const {
+    isEdit,
+    handleCancelEdit,
+    handleClickEdit,
+    handleEditSubmit,
+    editingTitle,
+    setEditingTitle,
+  } = useToDoItemEdit(todo, onSubmitEdit);
 
-  function handleClickEdit() {
-    setIsEdit(true);
-  }
-
-  function handleEditSubmit() {
-    setIsEdit(false);
-    onSubmitEdit(todo.id, editingTitle);
-  }
-
-  function handleCancelEdit() {
-    setIsEdit(false);
-    setEditingTitle(todo.title);
-  }
+  const { handleChangeCompleted } = useToDoItemCheck(todo.id);
 
   return (
     <>
@@ -47,12 +34,7 @@ export const ToDoItem: React.FC<Props> = ({
         <input
           type="checkbox"
           checked={isChecked}
-          onChange={(e) =>
-            onChangeCompleted({
-              id: todo.id,
-              isChecked: e.target.checked,
-            })
-          }
+          onChange={handleChangeCompleted}
         />
       </td>
       <td>{todo.id}</td>

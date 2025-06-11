@@ -1,15 +1,14 @@
 import type { ToDo } from '../../../types';
-import type { Props as ToDoItemProps } from '../ToDoItem';
 import { ToDoItem } from '../ToDoItem';
-import * as styles from './styles.module.ts';
+import { useToDoListCheck } from './hooks/useToDoListCheck';
+import { useToDoListSort } from './hooks/useToDoListSort';
+import * as styles from './styles.ts';
 
 export type Props = {
   todos: ToDo[];
   onClickDelete: (id: number) => void;
   onSubmitEdit: (id: number, title: string) => void;
-  onChangeAllCheckIds: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkingIds: number[];
-  onChangeCompleted: ToDoItemProps['onChangeCompleted'];
   onClickDoCompleted: () => void;
 };
 
@@ -17,14 +16,11 @@ export const ToDoList: React.FC<Props> = ({
   todos,
   onClickDelete,
   onSubmitEdit,
-  onChangeAllCheckIds,
   checkingIds,
-  onChangeCompleted,
   onClickDoCompleted,
 }) => {
-  const sortedTodos = [...todos].sort(
-    (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)
-  );
+  const { sortedTodos } = useToDoListSort(todos);
+  const { handleChangeAllCheckIds } = useToDoListCheck(todos);
 
   return (
     <>
@@ -37,7 +33,10 @@ export const ToDoList: React.FC<Props> = ({
         <thead>
           <tr>
             <th>
-              <input type="checkbox" onChange={onChangeAllCheckIds} />
+              <input
+                type="checkbox"
+                onChange={(e) => handleChangeAllCheckIds(e.target.checked)}
+              />
             </th>
             <th>ID</th>
             <th>Title</th>
@@ -54,7 +53,6 @@ export const ToDoList: React.FC<Props> = ({
                 onClickDelete={onClickDelete}
                 onSubmitEdit={onSubmitEdit}
                 isChecked={checkingIds.includes(v.id)}
-                onChangeCompleted={onChangeCompleted}
               />
             </tr>
           ))}

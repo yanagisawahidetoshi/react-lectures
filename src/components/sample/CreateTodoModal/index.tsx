@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { CreateTodo } from '../CreateTodo';
+import { useCreateTodoModal } from './hooks/useCreateTodoModal';
 import * as modalStyles from './styles';
 
-type Props = {
+export type Props = {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (todoTitle: string) => void;
@@ -16,51 +17,27 @@ export const CreateTodoModal: React.FC<Props> = ({
   onClose,
   onSubmit,
 }) => {
-  const modalContentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalContentRef.current &&
-        !modalContentRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
+  const { modalContentRef, handleSubmitAndClose } = useCreateTodoModal(
+    onSubmit,
+    onClose
+  );
 
   if (!isOpen || !portalTargetElement) {
     return null;
   }
 
-  const handleSubmitAndClose = (todoTitle: string) => {
-    onSubmit(todoTitle);
-    onClose();
-  };
-
   return ReactDOM.createPortal(
-    <div className={modalStyles.overlay} role="dialog" aria-modal="true">
-      <div className={modalStyles.content} ref={modalContentRef}>
+    <div
+      className={modalStyles.overlay}
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
+      <div
+        className={modalStyles.content}
+        ref={modalContentRef}
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           onClick={onClose}
           className={modalStyles.closeButton}
