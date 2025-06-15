@@ -38,7 +38,7 @@ export const MapComponent: React.NamedExoticComponent<{
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await axios.get<LocationData[]>('/api/locations');
+        const response = await axios.get<LocationData[]>('http://localhost:3001/locations');
         setLocations(response.data);
       } catch (error) {
         console.error('Failed to fetch locations:', error);
