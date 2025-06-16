@@ -1,6 +1,7 @@
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import React, { memo, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import { locationsData } from '../../../data/locations';
 import { useMap } from '../context/useMap';
 import { mapCenterIconWrapperStyle, mapComponentStyle } from './style';
@@ -32,9 +33,27 @@ export const MapComponent: React.NamedExoticComponent<{
   const [locations, setLocations] = useState<LocationData[]>([]);
   const markersRef = useRef<maplibregl.Marker[]>([]);
 
-  // 静的データを設定
+  // 環境に応じてデータを取得
   useEffect(() => {
-    setLocations(locationsData);
+    const fetchLocations = async () => {
+      try {
+        // 本番環境（Vercel等）では静的データを使用
+        if (process.env.NODE_ENV === 'production') {
+          setLocations(locationsData);
+          return;
+        }
+        
+        // 開発環境では json-server を使用
+        const response = await axios.get<LocationData[]>('http://localhost:3001/locations');
+        setLocations(response.data);
+      } catch (error) {
+        console.error('Failed to fetch locations, falling back to static data:', error);
+        // APIが失敗した場合は静的データにフォールバック
+        setLocations(locationsData);
+      }
+    };
+
+    fetchLocations();
   }, []);
 
   // マップと場所データが準備できたらマーカーを追加
