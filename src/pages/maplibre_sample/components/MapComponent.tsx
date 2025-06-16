@@ -1,11 +1,9 @@
-/* eslint-disable prettier/prettier */
-
-import React, { useRef, useEffect, memo, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { locationsData } from '../../../data/locations';
 import { useMap } from '../context/useMap';
 import { mapCenterIconWrapperStyle, mapComponentStyle } from './style';
-import { locationsData } from '../../../data/locations';
 
 /**
  * MapComponentは、Maplibreの地図を表示するコンポーネントです。
@@ -16,7 +14,7 @@ import { locationsData } from '../../../data/locations';
  * @returns {JSX.Element} - MapComponent
  */
 interface LocationData {
-  id: string;
+  id: number;
   name: string;
   location: {
     lat: number;
