@@ -2,10 +2,10 @@
 
 import React, { useRef, useEffect, memo, useState } from 'react';
 import maplibregl from 'maplibre-gl';
-import axios from 'axios';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useMap } from '../context/useMap';
 import { mapCenterIconWrapperStyle, mapComponentStyle } from './style';
+import { locationsData } from '../../../data/locations';
 
 /**
  * MapComponentは、Maplibreの地図を表示するコンポーネントです。
@@ -34,18 +34,9 @@ export const MapComponent: React.NamedExoticComponent<{
   const [locations, setLocations] = useState<LocationData[]>([]);
   const markersRef = useRef<maplibregl.Marker[]>([]);
 
-  // APIからすべての場所のデータを取得
+  // 静的データを設定
   useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await axios.get<LocationData[]>('http://localhost:3001/locations');
-        setLocations(response.data);
-      } catch (error) {
-        console.error('Failed to fetch locations:', error);
-      }
-    };
-
-    fetchLocations();
+    setLocations(locationsData);
   }, []);
 
   // マップと場所データが準備できたらマーカーを追加
