@@ -1,6 +1,7 @@
-/* eslint-disable prettier/prettier */
-import maplibregl, { Map } from 'maplibre-gl';
-import { useState, useEffect, ReactNode } from 'react';
+import type { Map } from 'maplibre-gl';
+import maplibregl from 'maplibre-gl';
+import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { MapContext } from './MapContext';
 
 /**
