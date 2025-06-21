@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { MapComponent } from './components/MapComponent';
 import { TopBar } from './components/TopBar';

@@ -1,4 +1,4 @@
-import { TCheckingIdsActions, TCheckingIdsState } from './types';
+import type { TCheckingIdsActions, TCheckingIdsState } from './types';
 
 export const reducer = (
   state: TCheckingIdsState,

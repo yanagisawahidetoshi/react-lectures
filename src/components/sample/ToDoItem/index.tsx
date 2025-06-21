@@ -1,4 +1,4 @@
-import { ToDo } from '../../../types';
+import type { ToDo } from '../../../types';
 import { ActionButtons } from '../ActionButtons';
 import { EditableItem } from '../EditableItem';
 import { useToDoItemCheck } from './hooks/useToDoItemCheck';

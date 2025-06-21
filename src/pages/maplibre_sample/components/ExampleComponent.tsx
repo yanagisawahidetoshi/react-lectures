@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 // ExampleComponent.tsx
 import React from 'react';
 import { useMap } from '../context/useMap';

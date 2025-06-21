@@ -1,6 +1,6 @@
-/* eslint-disable prettier/prettier */
 import { cx } from '@emotion/css';
-import React, { HtmlHTMLAttributes } from 'react';
+import type { HtmlHTMLAttributes } from 'react';
+import React from 'react';
 import { topBarStyle } from './style';
 
 /**

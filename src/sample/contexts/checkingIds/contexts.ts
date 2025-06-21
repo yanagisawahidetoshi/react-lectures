@@ -1,5 +1,6 @@
-import { createContext, Dispatch, useContext } from 'react';
-import { TCheckingIdsActions, TCheckingIdsState } from './types';
+import type { Dispatch } from 'react';
+import { createContext, useContext } from 'react';
+import type { TCheckingIdsActions, TCheckingIdsState } from './types';
 
 export const CheckingIdsStateContext = createContext<TCheckingIdsState>([]);
 export const CheckingIdsDispatchContext =
