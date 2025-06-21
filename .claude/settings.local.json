@@ -1,7 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm remove:*)"
+      "Bash(pnpm remove:*)",
+      "Bash(rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(yarn add:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run preview:*)",
+      "Bash(npm run mock-server:*)",
+      "Bash(lsof:*)",
+      "Bash(curl:*)"
     ],
     "deny": []
   }

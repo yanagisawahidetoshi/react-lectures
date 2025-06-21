@@ -1,4 +1,5 @@
-import { ReactNode, useReducer } from 'react';
+import type { ReactNode } from 'react';
+import { useReducer } from 'react';
 import {
   CheckingIdsDispatchContext,
   CheckingIdsStateContext,
