@@ -46,7 +46,7 @@ export const locationsApi = {
 
   // 単一のロケーションを取得
   async getLocation(id: number): Promise<LocationData> {
-    if (import.meta.env.MODE === 'production') {
+    if (import.meta.env.MODE === 'production' && supabase) {
       const { data, error } = await supabase
         .from('locations')
         .select('*')
@@ -75,7 +75,7 @@ export const locationsApi = {
   async createLocation(
     location: Omit<LocationData, 'id'>
   ): Promise<LocationData> {
-    if (import.meta.env.MODE === 'production') {
+    if (import.meta.env.MODE === 'production' && supabase) {
       // LocationData型からSupabaseのフラット構造に変換
       const supabaseData = {
         name: location.name,
@@ -113,7 +113,7 @@ export const locationsApi = {
     id: number,
     location: Partial<LocationData>
   ): Promise<LocationData> {
-    if (import.meta.env.MODE === 'production') {
+    if (import.meta.env.MODE === 'production' && supabase) {
       // LocationData型からSupabaseのフラット構造に変換
       const supabaseData: Record<string, string | number> = {};
       if (location.name) supabaseData.name = location.name;
@@ -153,7 +153,7 @@ export const locationsApi = {
 
   // ロケーションを削除
   async deleteLocation(id: number): Promise<void> {
-    if (import.meta.env.MODE === 'production') {
+    if (import.meta.env.MODE === 'production' && supabase) {
       const { error } = await supabase.from('locations').delete().eq('id', id);
 
       if (error) throw error;
